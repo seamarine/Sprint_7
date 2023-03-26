@@ -25,7 +25,7 @@ public class CreateCourierTest {
     @DisplayName("Создание нового курьера, валидные данные")
     public void creatingNewCourierWithValidData() {
         Response createResponse = CourierClient.createNewCourier(this.courier);
-        CourierClient.comparingActualResponseCodeWithSuccessfulOne(createResponse, "ok", 201);
+        CourierClient.compareActualResponseCodeWithSuccessfulOne(createResponse, "ok", 201);
 
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
         Response logInResponse = CourierClient.loginCourier(courierLogin);
@@ -37,10 +37,10 @@ public class CreateCourierTest {
     @DisplayName("Создание курьеров-дубликатов")
     public void creatingTwoDuplicateCouriers() {
         Response response = CourierClient.createNewCourier(this.courier);
-        CourierClient.comparingActualResponseCodeWithSuccessfulOne(response, "ok", 201);
+        CourierClient.compareActualResponseCodeWithSuccessfulOne(response, "ok", 201);
 
         Response secondResponse = CourierClient.createNewCourier(this.courier);
-        CourierClient.comparingErroneousResponseCodeWithActualOne(secondResponse, 409, "Этот логин уже используется. Попробуйте другой.");
+        CourierClient.compareErroneousResponseCodeWithActualOne(secondResponse, 409, "Этот логин уже используется. Попробуйте другой.");
 
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
         Response logInResponse = CourierClient.loginCourier(courierLogin);
@@ -54,7 +54,7 @@ public class CreateCourierTest {
     public void creationCourierWithEmptyLogin() {
         CourierRegister courier = new CourierRegister("", RandomStringUtils.randomAlphanumeric(5), RandomStringUtils.randomAlphanumeric(5));
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.comparingErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+        CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
     }
 
     @Test
@@ -63,7 +63,7 @@ public class CreateCourierTest {
         CourierRegister courier = new CourierRegister(RandomStringUtils.randomAlphanumeric(5), "", RandomStringUtils.randomAlphanumeric(5));
 
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.comparingErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+        CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
     }
 
     @Test
@@ -75,7 +75,7 @@ public class CreateCourierTest {
         CourierRegister courier = new CourierRegister(login, password, null);
 
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.comparingActualResponseCodeWithSuccessfulOne(response, "ok", 201);
+        CourierClient.compareActualResponseCodeWithSuccessfulOne(response, "ok", 201);
 
         CourierLogin courierLogin = new CourierLogin(login, password);
         Response logInResponse = CourierClient.loginCourier(courierLogin);
@@ -89,6 +89,6 @@ public class CreateCourierTest {
     public void creationCourierWithEmptyFields() {
         CourierRegister courier = new CourierRegister("", "", "");
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.comparingErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+        CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
     }
 }

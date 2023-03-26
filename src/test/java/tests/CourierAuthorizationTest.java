@@ -29,7 +29,7 @@ public class CourierAuthorizationTest {
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
         Response logInResponse = CourierClient.loginCourier(courierLogin);
 
-        CourierClient.comparingSuccessfulLoginResponseCodeWithActual(logInResponse, 200);
+        CourierClient.compareSuccessfulLoginResponseCodeWithActual(logInResponse, 200);
 
         courierId = CourierClient.getCourierId(logInResponse);
 
@@ -44,7 +44,7 @@ public class CourierAuthorizationTest {
         CourierLogin courierLogin = new CourierLogin("", this.courier.getLogin());
         Response logInResponse = CourierClient.loginCourier(courierLogin);
 
-        CourierClient.comparingErroneousResponseCodeWithActualOne(logInResponse, 400, "Недостаточно данных для входа");
+        CourierClient.compareErroneousResponseCodeWithActualOne(logInResponse, 400, "Недостаточно данных для входа");
 
         CourierLogin courierLogin2 = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
         Response logInResponse2 = CourierClient.loginCourier(courierLogin2);
@@ -62,7 +62,7 @@ public class CourierAuthorizationTest {
         CourierLogin courierLogin = new CourierLogin(null, this.courier.getLogin());
         Response logInResponse = CourierClient.loginCourier(courierLogin);
 
-        CourierClient.comparingErroneousResponseCodeWithActualOne(logInResponse, 400, "Недостаточно данных для входа");
+        CourierClient.compareErroneousResponseCodeWithActualOne(logInResponse, 400, "Недостаточно данных для входа");
 
         CourierLogin courierLogin2 = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
         Response logInResponse2 = CourierClient.loginCourier(courierLogin2);
@@ -80,7 +80,7 @@ public class CourierAuthorizationTest {
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), "");
         Response logInResponse = CourierClient.loginCourier(courierLogin);
 
-        CourierClient.comparingErroneousResponseCodeWithActualOne(logInResponse, 400, "Недостаточно данных для входа");
+        CourierClient.compareErroneousResponseCodeWithActualOne(logInResponse, 400, "Недостаточно данных для входа");
 
         CourierLogin courierLogin2 = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
         Response logInResponse2 = CourierClient.loginCourier(courierLogin2);
@@ -98,7 +98,7 @@ public class CourierAuthorizationTest {
         CourierLogin courierLogin = new CourierLogin("incorrect_login", this.courier.getPassword());
         Response logInResponse = CourierClient.loginCourier(courierLogin);
 
-        CourierClient.comparingErroneousResponseCodeWithActualOne(logInResponse, 404, "Учетная запись не найдена");
+        CourierClient.compareErroneousResponseCodeWithActualOne(logInResponse, 404, "Учетная запись не найдена");
 
         CourierLogin courierLogin2 = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
         Response logInResponse2 = CourierClient.loginCourier(courierLogin2);

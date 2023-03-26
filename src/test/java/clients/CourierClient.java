@@ -52,17 +52,17 @@ public class CourierClient {
     }
 
     @Step("Сравнение фактического кода ответа с успешным")
-    public static void comparingActualResponseCodeWithSuccessfulOne(Response response, String responseString, int responseStatusCode) {
+    public static void compareActualResponseCodeWithSuccessfulOne(Response response, String responseString, int responseStatusCode) {
         response.then().assertThat().body(responseString, equalTo(true)).and().statusCode(responseStatusCode);
     }
 
     @Step("Сравнение фактического кода логина юзера с успешным")
-    public static void comparingSuccessfulLoginResponseCodeWithActual(Response response, int responseStatusCode) {
+    public static void compareSuccessfulLoginResponseCodeWithActual(Response response, int responseStatusCode) {
         response.then().assertThat().body("id", not(0)).and().statusCode(responseStatusCode);
     }
 
     @Step("Сравнение ошибочного кода ответа с фактическим")
-    public static void comparingErroneousResponseCodeWithActualOne(Response response, int responseStatusCode, String message) {
+    public static void compareErroneousResponseCodeWithActualOne(Response response, int responseStatusCode, String message) {
         response.then().assertThat().body("message", equalTo(message)).and().statusCode(responseStatusCode);
     }
 

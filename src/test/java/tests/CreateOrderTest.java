@@ -61,7 +61,7 @@ public class CreateOrderTest {
     public void createOrderParameterizedColorScooterTest() {
         OrderCreate orderCreate = new OrderCreate(firstName, lastName, address, metroStation, phone, rentTime, deliveryDate, comment, colour);
         Response createResponse = OrderClient.createNewOrder(orderCreate);
-        OrderClient.comparingSuccessfulOrderSet(createResponse, 201);
+        OrderClient.compareSuccessfulOrderSet(createResponse, 201);
         orderTrack = OrderClient.getOrderTrack(createResponse);
 
     }

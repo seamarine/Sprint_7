@@ -49,12 +49,12 @@ public class OrderClient {
     }
 
     @Step("Сравнение успешного кода ответа с фактическим")
-    public static void comparingSuccessfulOrderSet(Response response, int responseCode) {
+    public static void compareSuccessfulOrderSet(Response response, int responseCode) {
         response.then().assertThat().body("track", not(0)).and().statusCode(responseCode);
     }
 
     @Step("Сравнение успешного кода ответа об отмене с фактическим")
-    public static void comparingSuccessfulOrderCancel(Response response, int responseCode) {
+    public static void compareSuccessfulOrderCancel(Response response, int responseCode) {
         response.then().assertThat().body("ok", equalTo(true)).and().statusCode(responseCode);
     }
 
