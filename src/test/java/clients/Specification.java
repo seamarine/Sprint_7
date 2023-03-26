@@ -7,7 +7,8 @@ import static io.restassured.RestAssured.given;
 public class Specification {
     public static RequestSpecification requestSpec() {
         return given()
-                .baseUri("http://qa-scooter.praktikum-services.ru/");
+                .baseUri("http://qa-scooter.praktikum-services.ru/")
+                .header("Content-type", "application/json");
     }
 
 

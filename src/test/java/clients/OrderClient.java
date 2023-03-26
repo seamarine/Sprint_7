@@ -19,7 +19,6 @@ public class OrderClient {
     public static Response createNewOrder(OrderCreate orderCreate) {
         return given()
                 .spec(Specification.requestSpec())
-                .header("Content-type", "application/json")
                 .body(orderCreate)
                 .post(createOrders);
     }
@@ -28,7 +27,6 @@ public class OrderClient {
     public static Response getAllOrders() {
         return given()
                 .spec(Specification.requestSpec())
-                .header("Content-type", "application/json")
                 .body("")
                 .get(createOrders);
     }
@@ -44,7 +42,6 @@ public class OrderClient {
     public static Response deleteOrder(String track) {
         return given()
                 .spec(Specification.requestSpec())
-                .header("Content-type", "application/json")
                 .put(cancelOrder + "?track=" + track);
     }
 

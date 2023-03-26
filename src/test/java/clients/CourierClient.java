@@ -21,7 +21,6 @@ public class CourierClient {
     public static Response createNewCourier(CourierRegister courier) {
         return given()
                 .spec(Specification.requestSpec())
-                .header("Content-type", "application/json")
                 .body(courier)
                 .when()
                 .post(courierRegister);
@@ -31,7 +30,6 @@ public class CourierClient {
     public static Response loginCourier(CourierLogin courier) {
         return given()
                 .spec(Specification.requestSpec())
-                .header("Content-type", "application/json")
                 .body(courier)
                 .post(courierLogin);
     }
@@ -47,7 +45,6 @@ public class CourierClient {
     public static void deleteCourier(String id) {
         given()
                 .spec(Specification.requestSpec())
-                .header("Content-type", "application/json")
                 .delete(courierDelete + id);
     }
 
