@@ -8,13 +8,14 @@ import org.example.pojo.CourierLogin;
 import org.example.pojo.CourierRegister;
 import org.junit.After;
 import org.junit.Test;
+import com.github.javafaker.Faker;
 
 public class CreateCourierTest {
 
-    CourierClient courierClient;
     String courierId;
+    Faker faker = new Faker();
 
-    CourierRegister courier = new CourierRegister("MichaelJ", "EarthSong", "Michael");
+    CourierRegister courier = new CourierRegister(faker.name().name(), faker.random().toString(), faker.name().firstName());
 
     @After
     public void tearDown() {
@@ -23,7 +24,7 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Создание нового курьера, валидные данные")
-    public void creatingNewCourierWithValidData() {
+    public void createNewCourierWithValidData() {
         Response createResponse = CourierClient.createNewCourier(this.courier);
         CourierClient.compareActualResponseCodeWithSuccessfulOne(createResponse, "ok", 201);
 
@@ -35,7 +36,8 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Создание курьеров-дубликатов")
-    public void creatingTwoDuplicateCouriers() {
+    public void createTwoDuplicateCouriers() {
+
         Response response = CourierClient.createNewCourier(this.courier);
         CourierClient.compareActualResponseCodeWithSuccessfulOne(response, "ok", 201);
 
@@ -51,26 +53,34 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Создание курьера, логин пустой")
-    public void creationCourierWithEmptyLogin() {
+    public void createCourierWithEmptyLogin() {
         CourierRegister courier = new CourierRegister("", RandomStringUtils.randomAlphanumeric(5), RandomStringUtils.randomAlphanumeric(5));
         Response response = CourierClient.createNewCourier(courier);
         CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+
+        CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
+        Response logInResponse = CourierClient.loginCourier(courierLogin);
+        courierId = CourierClient.getCourierId(logInResponse);
     }
 
     @Test
     @DisplayName("Создание курьера, пароль пустой")
-    public void creationCourierWithEmptyPassword() {
-        CourierRegister courier = new CourierRegister(RandomStringUtils.randomAlphanumeric(5), "", RandomStringUtils.randomAlphanumeric(5));
+    public void createCourierWithEmptyPassword() {
+        CourierRegister courier = new CourierRegister(faker.name().name(), "", faker.name().firstName());
 
         Response response = CourierClient.createNewCourier(courier);
         CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+
+        CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
+        Response logInResponse = CourierClient.loginCourier(courierLogin);
+        courierId = CourierClient.getCourierId(logInResponse);
     }
 
     @Test
     @DisplayName("Создание курьера, имя пустое")
-    public void creationCourierWithEmptyName() {
-        String login = RandomStringUtils.randomAlphanumeric(5);
-        String password = RandomStringUtils.randomAlphanumeric(5);
+    public void createCourierWithEmptyName() {
+        String login = faker.name().name();
+        String password = faker.name().name();
 
         CourierRegister courier = new CourierRegister(login, password, null);
 
@@ -86,9 +96,13 @@ public class CreateCourierTest {
 
     @Test
     @DisplayName("Создание курьера, все поля не заполнены")
-    public void creationCourierWithEmptyFields() {
+    public void createCourierWithEmptyFields() {
         CourierRegister courier = new CourierRegister("", "", "");
         Response response = CourierClient.createNewCourier(courier);
         CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+
+        CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
+        Response logInResponse = CourierClient.loginCourier(courierLogin);
+        courierId = CourierClient.getCourierId(logInResponse);
     }
 }

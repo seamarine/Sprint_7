@@ -10,6 +10,4 @@ public class Specification {
                 .baseUri("http://qa-scooter.praktikum-services.ru/")
                 .header("Content-type", "application/json");
     }
-
-
 }

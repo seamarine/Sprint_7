@@ -1,6 +1,7 @@
 package tests;
 
 import clients.CourierClient;
+import com.github.javafaker.Faker;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import org.example.pojo.CourierLogin;
@@ -11,10 +12,11 @@ import org.junit.Test;
 
 public class CourierAuthorizationTest {
 
-    CourierClient courierClient;
+    Faker faker = new Faker();
+
     String courierId;
 
-    CourierRegister courier = new CourierRegister("tommy_hardy>", "ImLegend123", "Tom");
+    CourierRegister courier = new CourierRegister(faker.name().name(), faker.random().toString(), faker.name().firstName());
 
     @After
     public void tearDown() {
