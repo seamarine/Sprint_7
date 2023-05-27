@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Test;
 import com.github.javafaker.Faker;
 
+import static constants.ResponseStatusCode.*;
+
 public class CreateCourierTest {
 
     String courierId;
@@ -26,12 +28,12 @@ public class CreateCourierTest {
     @DisplayName("Создание нового курьера, валидные данные")
     public void createNewCourierWithValidData() {
         Response createResponse = CourierClient.createNewCourier(this.courier);
-        CourierClient.compareActualResponseCodeWithSuccessfulOne(createResponse, "ok", 201);
+        CourierClient.compareActualResponseCodeWithSuccessfulOne(createResponse, "ok", RESPONSE_STATUS_CODE_201);
 
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
-        Response logInResponse = CourierClient.loginCourier(courierLogin);
+        Response logInResponseForDeleteCourier = CourierClient.loginCourier(courierLogin);
 
-        courierId = CourierClient.getCourierId(logInResponse);
+        courierId = CourierClient.getCourierId(logInResponseForDeleteCourier);
     }
 
     @Test
@@ -39,15 +41,15 @@ public class CreateCourierTest {
     public void createTwoDuplicateCouriers() {
 
         Response response = CourierClient.createNewCourier(this.courier);
-        CourierClient.compareActualResponseCodeWithSuccessfulOne(response, "ok", 201);
+        CourierClient.compareActualResponseCodeWithSuccessfulOne(response, "ok", RESPONSE_STATUS_CODE_201);
 
         Response secondResponse = CourierClient.createNewCourier(this.courier);
-        CourierClient.compareErroneousResponseCodeWithActualOne(secondResponse, 409, "Этот логин уже используется. Попробуйте другой.");
+        CourierClient.compareErroneousResponseCodeWithActualOne(secondResponse, RESPONSE_STATUS_CODE_409, "Этот логин уже используется. Попробуйте другой.");
 
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
-        Response logInResponse = CourierClient.loginCourier(courierLogin);
+        Response logInResponseForDeleteCourier = CourierClient.loginCourier(courierLogin);
 
-        courierId = CourierClient.getCourierId(logInResponse);
+        courierId = CourierClient.getCourierId(logInResponseForDeleteCourier);
 
     }
 
@@ -56,11 +58,11 @@ public class CreateCourierTest {
     public void createCourierWithEmptyLogin() {
         CourierRegister courier = new CourierRegister("", RandomStringUtils.randomAlphanumeric(5), RandomStringUtils.randomAlphanumeric(5));
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+        CourierClient.compareErroneousResponseCodeWithActualOne(response, RESPONSE_STATUS_CODE_400, "Недостаточно данных для создания учетной записи");
 
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
-        Response logInResponse = CourierClient.loginCourier(courierLogin);
-        courierId = CourierClient.getCourierId(logInResponse);
+        Response logInResponseForDeleteCourier = CourierClient.loginCourier(courierLogin);
+        courierId = CourierClient.getCourierId(logInResponseForDeleteCourier);
     }
 
     @Test
@@ -69,11 +71,11 @@ public class CreateCourierTest {
         CourierRegister courier = new CourierRegister(faker.name().name(), "", faker.name().firstName());
 
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+        CourierClient.compareErroneousResponseCodeWithActualOne(response, RESPONSE_STATUS_CODE_400, "Недостаточно данных для создания учетной записи");
 
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
-        Response logInResponse = CourierClient.loginCourier(courierLogin);
-        courierId = CourierClient.getCourierId(logInResponse);
+        Response logInResponseForDeleteCourier = CourierClient.loginCourier(courierLogin);
+        courierId = CourierClient.getCourierId(logInResponseForDeleteCourier);
     }
 
     @Test
@@ -85,12 +87,12 @@ public class CreateCourierTest {
         CourierRegister courier = new CourierRegister(login, password, null);
 
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.compareActualResponseCodeWithSuccessfulOne(response, "ok", 201);
+        CourierClient.compareActualResponseCodeWithSuccessfulOne(response, "ok", RESPONSE_STATUS_CODE_201);
 
         CourierLogin courierLogin = new CourierLogin(login, password);
-        Response logInResponse = CourierClient.loginCourier(courierLogin);
+        Response logInResponseForDeleteCourier = CourierClient.loginCourier(courierLogin);
 
-        courierId = CourierClient.getCourierId(logInResponse);
+        courierId = CourierClient.getCourierId(logInResponseForDeleteCourier);
 
     }
 
@@ -99,10 +101,10 @@ public class CreateCourierTest {
     public void createCourierWithEmptyFields() {
         CourierRegister courier = new CourierRegister("", "", "");
         Response response = CourierClient.createNewCourier(courier);
-        CourierClient.compareErroneousResponseCodeWithActualOne(response, 400, "Недостаточно данных для создания учетной записи");
+        CourierClient.compareErroneousResponseCodeWithActualOne(response, RESPONSE_STATUS_CODE_400, "Недостаточно данных для создания учетной записи");
 
         CourierLogin courierLogin = new CourierLogin(this.courier.getLogin(), this.courier.getPassword());
-        Response logInResponse = CourierClient.loginCourier(courierLogin);
-        courierId = CourierClient.getCourierId(logInResponse);
+        Response logInResponseForDeleteCourier = CourierClient.loginCourier(courierLogin);
+        courierId = CourierClient.getCourierId(logInResponseForDeleteCourier);
     }
 }

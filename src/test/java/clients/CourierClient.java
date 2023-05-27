@@ -12,9 +12,9 @@ import static org.hamcrest.Matchers.not;
 
 public class CourierClient {
 
-    static String courierRegister = "/api/v1/courier";
-    static String courierLogin = "/api/v1/courier/login";
-    static String courierDelete = "/api/v1/courier/";
+    private static final String COURIER_REGISTER = "/api/v1/courier";
+    private static final String COURIER_LOGIN = "/api/v1/courier/login";
+    private static final String courierDelete = "/api/v1/courier/";
 
 
     @Step("Создание нового курьера {courier}")
@@ -23,7 +23,7 @@ public class CourierClient {
                 .spec(Specification.requestSpec())
                 .body(courier)
                 .when()
-                .post(courierRegister);
+                .post(COURIER_REGISTER);
     }
 
     @Step("Логин курьера")
@@ -31,7 +31,7 @@ public class CourierClient {
         return given()
                 .spec(Specification.requestSpec())
                 .body(courier)
-                .post(courierLogin);
+                .post(COURIER_LOGIN);
     }
 
     @Step("Получение ID курьера")

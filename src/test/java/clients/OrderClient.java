@@ -12,23 +12,22 @@ import static org.hamcrest.Matchers.not;
 
 public class OrderClient {
 
-    static String createOrders = "/api/v1/orders";
-    static String cancelOrder = "/api/v1/orders/cancel";
+    private static final String CREATE_ORDERS = "/api/v1/orders";
+    private static final String CANCEL_ORDER = "/api/v1/orders/cancel";
 
     @Step("Создание нового заказа")
     public static Response createNewOrder(OrderCreate orderCreate) {
         return given()
                 .spec(Specification.requestSpec())
                 .body(orderCreate)
-                .post(createOrders);
+                .post(CREATE_ORDERS);
     }
 
     @Step("Получение списка заказов")
     public static Response getAllOrders() {
         return given()
                 .spec(Specification.requestSpec())
-                .body("")
-                .get(createOrders);
+                .get(CREATE_ORDERS);
     }
 
     @Step("Получение трек-номера заказа")
@@ -42,7 +41,7 @@ public class OrderClient {
     public static Response deleteOrder(String track) {
         return given()
                 .spec(Specification.requestSpec())
-                .put(cancelOrder + "?track=" + track);
+                .put(CANCEL_ORDER + "?track=" + track);
     }
 
     @Step("Сравнение успешного кода ответа с фактическим")
